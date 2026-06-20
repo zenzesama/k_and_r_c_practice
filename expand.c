@@ -1,0 +1,72 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_SIZE 1000
+
+void expand(char s1[], char s2[]) {
+    int s1_size = strlen(s1);
+
+    int left = -1, right = -1;
+    for (int i = 0; i < s1_size; i++) {
+        if (s1[i] != '-') {
+            left = i;
+            break;
+        }
+    }
+
+    for (int j = s1_size - 1; j >= 0; j--) {
+        if (s1[j] != '-') {
+            right = j;
+            break;
+        }
+    }
+
+    printf("Left and right and s1_size are %d, %d, %d\n", left, right, s1_size);
+
+    int s1_itr, s2_itr;
+    s1_itr = left + 1;
+    for (s2_itr = 0; s2_itr < left; s2_itr++) {
+        s2[s2_itr] = s1[s2_itr];
+    }
+    
+    while (s1_itr < right) {
+        char prev = s1[s1_itr - 1];
+        char next = s1[s1_itr + 1];
+
+        if (s1[s1_itr] == '-') {
+            for (char ch = prev; ch <= next; ch++) {
+                s2[s2_itr++] = ch;
+            }
+            s1_itr++;
+        }
+        s1_itr++;
+    }
+
+    if (right != s1_size - 1) {
+        for (int temp = right; temp < s1_size; temp++) {
+            s2[s2_itr++] = s1[temp];
+    
+        }
+    }
+
+    s2[s2_itr] = '\0';
+}
+
+int main() {
+    char s1[MAX_SIZE];
+    
+    int i = 0, c = 0;
+    
+    while ((c = getchar()) != EOF) {
+        s1[i++] = c;
+    }
+
+    s1[i] = '\0';
+
+    char s2[MAX_SIZE];
+    
+    expand(s1, s2);
+    printf("\nThis is the extention: %s\n", s2);
+
+    return 0;
+}

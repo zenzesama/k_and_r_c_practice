@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include <ctype.h>
+#include <math.h>
 
-#define MAXLEN 1000;
+#define MAXLEN 1000
 
 double atof(char s[]) {
     int i = 0, sign = 1;
@@ -10,7 +11,6 @@ double atof(char s[]) {
     while (isspace(s[i])) i++;
 
     sign = (s[i] == '-') ? -1 : 1;
-
     if (s[i] == '+' || s[i] == '-') i++;
 
     for (val = 0.0; isdigit(s[i]); i++) {
@@ -23,18 +23,40 @@ double atof(char s[]) {
         val = 10.0 * val + (s[i] - '0');
         power *= 10;
     }
+    
+    val *= sign;
 
-    return sign * val / power;
+    if (s[i] == 'e' || s[i] == 'E') {
+        i++; // skip the e
 
+        int exp_sign = 1;
+        int exp;
+
+        exp_sign = (s[i] == '-') ? -1 : 1;
+        if (s[i] == '+' || s[i] == '-') i++;
+
+        for (exp = 0; isdigit(s[i]); i++) {
+            exp = 10 * exp + (s[i] - '0');
+        }
+        
+        exp *= exp_sign;
+        
+        power = power / (pow(10, exp));
+    }
+
+    return val / power;
 }
 
 int main() {
-    char[MAXLEN] s;
-    int i = 0, limit = MAXLEN;
+    char s[MAXLEN];
+    int i = 0, limit = MAXLEN, c;
 
-    
+    while (limit-- && (c = getchar()) != EOF && c != '\n') {
+        s[i] = c;
+        i++;
+    }
 
-    printf("%lf\n", atof("6.76767676767676767"));
+    printf("%lf\n", atof(s));
 
     return 0;
 }

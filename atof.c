@@ -1,8 +1,24 @@
 #include <stdio.h>
 #include <ctype.h>
-#include <math.h>
 
 #define MAXLEN 1000
+
+double my_pow(double x, int n) {
+    if (n == 0) return 1;
+    
+    double result = 1;
+
+    if (n < 0) {
+        x = 1 / x;
+        n = -n;
+    }
+
+    while (n--) {
+        result *= x;
+    }
+    
+    return result;
+}
 
 double atof(char s[]) {
     int i = 0, sign = 1;
@@ -30,18 +46,18 @@ double atof(char s[]) {
         i++; // skip the e
 
         int exp_sign = 1;
-        int exp;
+        double exp;
 
         exp_sign = (s[i] == '-') ? -1 : 1;
         if (s[i] == '+' || s[i] == '-') i++;
 
-        for (exp = 0; isdigit(s[i]); i++) {
-            exp = 10 * exp + (s[i] - '0');
+        for (exp = 0.0; isdigit(s[i]); i++) {
+            exp = 10.0 * exp + (s[i] - '0');
         }
         
         exp *= exp_sign;
         
-        power = power / (pow(10, exp));
+        power = power / (my_pow(10, exp));
     }
 
     return val / power;

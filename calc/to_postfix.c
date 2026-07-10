@@ -2,6 +2,9 @@
 #include <ctype.h>
 #include "calc.h"
 
+static int sp = 0;
+static char stk[MAXVAL];
+
 static int prec(char c) {
     if (c == '/' || c == '*') {
         return 2;
@@ -15,35 +18,46 @@ static int prec(char c) {
     }
 }
 
-
-
 void to_postfix(char exp[], char result[]) {
     int j = 0;
     
-    clear();
-
     for (int i = 0; exp[i] != '\0'; i++) {
         char c = exp[i];
 
         if (c == ' ') continue;
 
         if (isdigit(c)){
-            while (exp[i] != '\0' && isdigit(c)) {
-                result[j++] = c;
-                i++;
-            }
+            result[j++] = c;
         }
 
         else if (c == '(') {
-            push(c);
+            stk[sp++] = c;
         }
 
         else if (c == ')') {
-            while (!is_empty() && peek() != '(') {
-                pop();
+            while (sp > 0 && stk[sp - 1] != '(') {
+                result[j++] = stk[--sp];
             }
+
+            if (sp > 0) sp--;
         }
 
+        else if (c == '+' || c == '-' || c == '*' || c == '/') {
+            while (sp > 0 && stk[sp - 1] != '(' && prec(stk[sp - 1]) >= prec(c)) {
+                result[j++] = stk[--sp];
+            }
+            stk[sp++] = c;
+        }
 
+        else {
+            printf("Invalid character. %c\n", c);
+            return;
+        }
     }
+
+    while (sp > 0) {
+        result[j++] = stk[--sp];
+    }
+
+    result[j] = '\0';
 }

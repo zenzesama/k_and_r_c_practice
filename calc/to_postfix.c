@@ -18,7 +18,7 @@ static int prec(char c) {
     }
 }
 
-void to_postfix(char exp[], char result[]) {
+void to_postfix(char *exp, char *result) {
     int j = 0;
     
     for (int i = 0; exp[i] != '\0'; i++) {
@@ -27,7 +27,11 @@ void to_postfix(char exp[], char result[]) {
         if (c == ' ') continue;
 
         if (isdigit(c)){
-            result[j++] = c;
+            while (isdigit(exp[i])) {
+                result[j++] = exp[i++];
+            }
+            result[j++] = ' ';
+            i--;
         }
 
         else if (c == '(') {
@@ -37,6 +41,7 @@ void to_postfix(char exp[], char result[]) {
         else if (c == ')') {
             while (sp > 0 && stk[sp - 1] != '(') {
                 result[j++] = stk[--sp];
+                result[j++] = ' ';
             }
 
             if (sp > 0) sp--;
@@ -45,6 +50,7 @@ void to_postfix(char exp[], char result[]) {
         else if (c == '+' || c == '-' || c == '*' || c == '/') {
             while (sp > 0 && stk[sp - 1] != '(' && prec(stk[sp - 1]) >= prec(c)) {
                 result[j++] = stk[--sp];
+                result[j++] = ' ';
             }
             stk[sp++] = c;
         }
@@ -57,7 +63,10 @@ void to_postfix(char exp[], char result[]) {
 
     while (sp > 0) {
         result[j++] = stk[--sp];
+        result[j++] = ' ';
     }
+
+    if (j > 0 && result[j - 1] == ' ') j--;
 
     result[j] = '\0';
 }

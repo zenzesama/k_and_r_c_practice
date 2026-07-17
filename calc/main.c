@@ -14,7 +14,9 @@ int main() {
 
     to_postfix(exp, result);
 
-    printf("%s\n", result);
+    set_exp(result);
+
+
 
     return 0;
 }

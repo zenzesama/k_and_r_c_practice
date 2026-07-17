@@ -8,4 +8,10 @@ double pop(void);
 // to_postfix.c
 void to_postfix(char[], char[]);
 
-// z
+// getop.c
+int getop(char *);
+
+// getch.c
+int getch(void);
+void ungetch(int);
+void set_exp(char *);

@@ -15,3 +15,6 @@ int getop(char *);
 int getch(void);
 void ungetch(int);
 void set_exp(char *);
+
+// atof.c
+double atof(char *);

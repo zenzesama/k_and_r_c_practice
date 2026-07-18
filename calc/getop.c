@@ -1,7 +1,6 @@
+#include <stdio.h>
 #include <ctype.h>
-
-int getch(void);
-void ungetch(int);
+#include "calc.h"
 
 int getop(char *s) {
     int i, c;
@@ -26,7 +25,7 @@ int getop(char *s) {
     }
 
     s[i] = '\0';
-    if (c != EOF) unget(c);
+    if (c != EOF) ungetch(c);
 
     return NUMBER;
 }

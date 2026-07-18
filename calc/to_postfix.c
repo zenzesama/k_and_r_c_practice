@@ -67,6 +67,7 @@ void to_postfix(char *exp, char *result) {
     }
 
     if (j > 0 && result[j - 1] == ' ') j--;
-
+    
+    result[j++] = '\n';
     result[j] = '\0';
 }

@@ -14,7 +14,7 @@ int getch(void) {
     if (buff_ptr > 0) {
         return buff[--buff_ptr];
     }
-    return (exp && *exp) ? (*exp)++ : EOF;
+    return (exp && *exp) ? *exp++ : EOF;
 }
 
 void ungetch(int c) {

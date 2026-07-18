@@ -15,10 +15,11 @@ int main() {
     exp[i] = '\0';
 
     to_postfix(exp, result);
-
+    
     set_exp(result);
 
-    int type, op2;
+    int type;
+    double op2;
     char s[MAXOP];
 
     while ((type = getop(s)) != EOF) {

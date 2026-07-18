@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include <ctype.h>
 
 #define MAXLEN 1000
@@ -63,16 +62,3 @@ double atof(char *s) {
     return val / power;
 }
 
-int main() {
-    char s[MAXLEN];
-    int i = 0, limit = MAXLEN, c;
-
-    while (limit-- && (c = getchar()) != EOF && c != '\n') {
-        s[i] = c;
-        i++;
-    }
-
-    printf("%lf\n", atof(s));
-
-    return 0;
-}

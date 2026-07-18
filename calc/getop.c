@@ -14,14 +14,13 @@ int getop(char *s) {
     }
 
     i = 0;
-    if (isdigit(c)) {
+    int seen_dot = 0;
+
+    while (isdigit(c) || (c == '.' && !seen_dot)) {
+        if (c == '.') seen_dot = 1;
+
         s[i++] = c;
-        while (isdigit(s[i++] = (c = getch())));
-    }
-    
-    if (c == '.') {
-        s[i++] = c;
-        while (isdigit(s[i++] = (c = getch())));
+        c = getch();
     }
 
     s[i] = '\0';

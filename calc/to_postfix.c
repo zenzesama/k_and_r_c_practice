@@ -27,7 +27,7 @@ void to_postfix(char *exp, char *result) {
         if (c == ' ') continue;
 
         if (isdigit(c)){
-            while (isdigit(exp[i])) {
+            while (isdigit(exp[i]) || exp[i] == '.') {
                 result[j++] = exp[i++];
             }
             result[j++] = ' ';

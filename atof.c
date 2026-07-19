@@ -20,39 +20,39 @@ double my_pow(double x, int n) {
     return result;
 }
 
-double atof(char s[]) {
-    int i = 0, sign = 1;
+double atof(char *s) {
+    int sign = 1;
     double val, power;
 
-    while (isspace(s[i])) i++;
+    while (isspace(*s)) s++;
 
-    sign = (s[i] == '-') ? -1 : 1;
-    if (s[i] == '+' || s[i] == '-') i++;
+    sign = (*s == '-') ? -1 : 1;
+    if (*s == '+' || *s == '-') s++;
 
-    for (val = 0.0; isdigit(s[i]); i++) {
-        val = 10.0 * val + (s[i] - '0');
+    for (val = 0.0; isdigit(*s); s++) {
+        val = 10.0 * val + (*s - '0');
     }
 
-    if (s[i] == '.') i++;
+    if (*s == '.') s++;
     
-    for (power = 1; isdigit(s[i]); i++) {
-        val = 10.0 * val + (s[i] - '0');
+    for (power = 1; isdigit(*s); s++) {
+        val = 10.0 * val + (*s - '0');
         power *= 10;
     }
     
     val *= sign;
 
-    if (s[i] == 'e' || s[i] == 'E') {
-        i++; // skip the e
+    if (*s == 'e' || *s == 'E') {
+        s++; // skip the e
 
         int exp_sign = 1;
         double exp;
 
-        exp_sign = (s[i] == '-') ? -1 : 1;
-        if (s[i] == '+' || s[i] == '-') i++;
+        exp_sign = (*s == '-') ? -1 : 1;
+        if (*s == '+' || *s == '-') s++;
 
-        for (exp = 0.0; isdigit(s[i]); i++) {
-            exp = 10.0 * exp + (s[i] - '0');
+        for (exp = 0.0; isdigit(*s); s++) {
+            exp = 10.0 * exp + (*s - '0');
         }
         
         exp *= exp_sign;
